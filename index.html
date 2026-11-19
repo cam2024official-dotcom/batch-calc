@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0e2a22">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Batch Calc">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
+<title>Tarquin Coolpro Batch Calculator</title>
+<style>
+:root{--bg:#eef1ee;--card:#fff;--ink:#14201b;--mute:#5b6a63;--line:#cfd8d2;--acc:#0f5c4d;--accink:#fff;--warn:#9a4a00;--hl:#e3efe9;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1714;--card:#18231f;--ink:#eaf1ed;--mute:#9db0a7;--line:#2c3c36;--acc:#5fd1b3;--accink:#06231b;--warn:#f0a35a;--hl:#20312b}}
+:root[data-theme="dark"]{--bg:#0f1714;--card:#18231f;--ink:#eaf1ed;--mute:#9db0a7;--line:#2c3c36;--acc:#5fd1b3;--accink:#06231b;--warn:#f0a35a;--hl:#20312b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-variant-numeric:tabular-nums}
+main{max-width:560px;margin:0 auto;padding:14px 14px 40px}
+h1{font-size:20px;margin:4px 0 12px;letter-spacing:-.01em}
+.tabs,.chips{display:flex;gap:8px;flex-wrap:wrap}
+button{font:inherit;color:var(--ink);background:var(--card);border:2px solid var(--line);border-radius:10px;padding:12px 14px;min-height:48px;cursor:pointer}
+button[aria-pressed="true"]{background:var(--acc);color:var(--accink);border-color:var(--acc);font-weight:700}
+.tabs button{flex:1;min-width:30%}
+.chips button{padding:8px 12px;min-height:40px}
+label.big{display:block;margin:16px 0 6px;font-weight:700}
+input[type=number]{width:100%;font:700 34px/1.2 inherit;padding:10px 12px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+input:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.order{margin:14px 0 8px;padding:10px 12px;border-left:5px solid var(--warn);background:var(--card);font-weight:600}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:12px;background:var(--card);border:1px solid var(--line);border-radius:10px;margin-top:8px}
+.row .n{font-weight:700}
+.row .v{font-size:26px;font-weight:800;text-align:right}
+.row .v small{font-size:14px;font-weight:600;color:var(--mute)}
+.row .w{display:block;font-size:14px;color:var(--mute);font-weight:500}
+.sub{margin-left:22px;background:var(--hl)}
+.sub .v{font-size:22px}
+.tot{background:var(--acc);color:var(--accink);border-color:var(--acc)}
+.tot .w{color:inherit;opacity:.85}
+details{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+summary{font-weight:700;cursor:pointer;min-height:36px;display:flex;align-items:center}
+.wg{display:grid;grid-template-columns:1fr 110px;gap:8px;align-items:center;margin-top:8px}
+.wg input{font:600 18px/1.2 inherit;padding:8px;border:2px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%}
+.note{font-size:13px;color:var(--mute);margin-top:10px}
+.warn{color:var(--warn);font-weight:600}
+:root{--head:#0e2a22;--amber:#f2b01e}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--head:#0a1411}}
+:root[data-theme="dark"]{--head:#0a1411}
+body{font-family:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--head);z-index:10}
+.top{background:var(--head);color:#fff;padding:22px 18px 18px}
+.top-in{max-width:560px;margin:0 auto}
+.top h1{margin:0;font:700 36px/1 "Barlow Condensed","Arial Narrow",system-ui,sans-serif;letter-spacing:.01em;color:#fff}
+.top p{margin:6px 0 0;color:#9fc4b6;font-size:16px}
+.stripe{height:8px;background:repeating-linear-gradient(-45deg,var(--amber) 0 12px,#14201b 12px 24px)}
+main{padding-top:18px}
+.tabs{gap:0;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:4px}
+.tabs button{border:0;border-radius:10px;min-width:0;background:transparent;font-weight:600;padding:10px 6px;font-size:15px;line-height:1.15}
+.tabs button[aria-pressed="true"]{background:var(--acc);color:var(--accink)}
+.chips button{border-radius:999px;font-weight:600}
+label.big{font-weight:600;font-size:15px;color:var(--mute);margin:20px 0 8px}
+input[type=number]{font-family:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;font-weight:700;font-size:48px;line-height:1.1;padding:8px 14px;border-radius:14px}
+.row{border-radius:14px;padding:14px;align-items:center;box-shadow:0 1px 0 var(--line)}
+.row .n{display:flex;align-items:center;gap:12px;font-size:18px}
+.row .t{font-weight:600}
+.row .w{font-weight:500}
+.b{font:700 18px/1 "Barlow Condensed",system-ui,sans-serif;font-style:normal;width:30px;height:30px;border-radius:50%;background:var(--head);color:var(--amber);display:grid;place-items:center;flex:none}
+.row .v{font-family:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;font-size:38px;line-height:1;font-weight:700;letter-spacing:.01em}
+.row .v small{font:600 15px "Barlow",system-ui,sans-serif;letter-spacing:0}
+.sub{margin-left:26px;border-left:4px solid var(--acc)}
+.sub .v{font-size:30px}
+.tot{background:var(--head);border-color:var(--acc);color:#fff;margin-top:14px;padding:18px 16px}
+.tot .v{color:var(--amber);font-size:46px}
+.tot .v small,.tot .w{color:#9fc4b6}
+.order{border-radius:0 12px 12px 0;font-size:16px;margin:16px 0 4px}
+.wg input{font-family:"Barlow",system-ui,sans-serif;font-size:18px;font-weight:600;padding:8px}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="top"><div class="top-in"><h1>Tarquin Coolpro</h1><p>Acid and CableShield batch calculator</p></div></header>
+<div class="stripe"></div>
+<main>
+<div class="tabs" id="tabs"></div>
+<div id="pcts" class="chips" style="margin-top:12px"></div>
+<label class="big" for="g">Total gallons</label>
+<input id="g" type="number" inputmode="decimal" min="0" step="any" value="500">
+<div class="chips" id="q" style="margin-top:10px"></div>
+<div id="out"></div>
+<details>
+<summary>Weights (lb per gallon)</summary>
+<div class="wg" id="wg"></div>
+<p class="note">Acid weights are from your Acid concentrations and weights sheet. Water is the standard 8.34. <span class="warn">5% HCl is not on that sheet: 8.5 is an estimate, so confirm it.</span> Product weights (Y007, Y007A, A272) were not provided, so those show gallons only.</p>
+</details>
+<p class="note">Blend factors come from the CableShield charts effective 11/10/2026 and the Acid Dilution Chart, and are scaled to any gallon amount. Results match the printed rows. Check against your chart before loading.</p>
+</main>
+<script>
+var DIL={5:[.123,.877],7.5:[.187,.813],10:[.253,.747],15:[.388,.612],20:[.53,.47],28:[.75,.25],32:[.88,.12]};
+var BL={
+ c100:{name:"CableShield 100%",hcl:15,f:{hcl:.97,y7:.01,y7a:.003,a272:.017}},
+ c33:{name:"CableShield 33%",hcl:5,f:{hcl:.99,y7:.01/3,y7a:.001,a272:.017/3}}
+};
+var DEF={acid:9.85,water:8.34,5:8.5,7.5:8.6,10:8.7,15:9.0,20:9.2,28:9.5,32:9.68};
+var W=Object.assign({},DEF);
+try{var s=JSON.parse(localStorage.getItem("tcw")||"null");if(s)W=Object.assign(W,s)}catch(e){}
+var mode="c100",pct=15;
+var $=function(i){return document.getElementById(i)};
+function fmt(n){var d=n<1?3:(n<500?2:1);return n.toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d})}
+function lb(n){return Math.round(n).toLocaleString("en-US")+" lb"}
+function row(name,gal,wt,cls){var m=/^(\d)\. (.*)/.exec(name),b="";if(m){b='<i class="b">'+m[1]+'</i>';name=m[2]}return '<div class="row '+(cls||"")+'"><span class="n">'+b+'<span class="t">'+name+(wt!=null?'<span class="w">'+lb(wt)+'</span>':'')+'</span></span><span class="v">'+fmt(gal)+' <small>gal</small></span></div>'}
+function calc(){
+ var G=parseFloat($("g").value)||0,h="";
+ if(mode==="dil"){
+  var d=DIL[pct],a=G*d[0],w=G*d[1];
+  h+='<div class="order">Add water first, then acid, to make '+pct+'% HCl.</div>';
+  h+=row("Water",w,w*W.water)+row("36% acid",a,a*W.acid);
+  h+=row("Total "+pct+"% HCl",G,G*W[pct],"tot");
+ }else{
+  var b=BL[mode],f=b.f,hg=G*f.hcl,d2=DIL[b.hcl],a2=hg*d2[0],w2=hg*d2[1];
+  h+='<div class="order">Blend the '+b.hcl+'% HCl first. Then add Y007, then Y007A, then A272.</div>';
+  h+=row("1. "+b.hcl+"% HCl",hg,hg*W[b.hcl]);
+  h+=row("Water",w2,w2*W.water,"sub")+row("36% acid",a2,a2*W.acid,"sub");
+  h+=row("2. Y007",G*f.y7)+row("3. Y007A",G*f.y7a)+row("4. A272",G*f.a272);
+  h+=row("Total "+b.name,G,null,"tot");
+ }
+ $("out").innerHTML=h;
+}
+function tabs(){
+ var t=[["c100","CableShield 100%"],["c33","CableShield 33%"],["dil","Acid dilution"]];
+ $("tabs").innerHTML=t.map(function(x){return '<button data-m="'+x[0]+'" aria-pressed="'+(mode===x[0])+'">'+x[1]+'</button>'}).join("");
+ $("pcts").style.display=mode==="dil"?"flex":"none";
+ $("pcts").innerHTML=Object.keys(DIL).map(function(p){return '<button data-p="'+p+'" aria-pressed="'+(+p===pct)+'">'+p+'%</button>'}).join("");
+}
+$("tabs").onclick=function(e){var m=e.target.getAttribute("data-m");if(m){mode=m;tabs();calc()}};
+$("pcts").onclick=function(e){var p=e.target.getAttribute("data-p");if(p){pct=+p;tabs();calc()}};
+$("q").innerHTML=[100,265,330,500,1000,2000,3000,5000].map(function(n){return '<button data-g="'+n+'">'+n.toLocaleString("en-US")+'</button>'}).join("");
+$("q").onclick=function(e){var g=e.target.getAttribute("data-g");if(g){$("g").value=g;calc()}};
+$("g").oninput=calc;
+var names=[["acid","36% acid"],["water","Water"],[5,"5% HCl (estimate)"],[7.5,"7.5% HCl"],[10,"10% HCl"],[15,"15% HCl"],[20,"20% HCl"],[28,"28% HCl"],[32,"32% HCl"]];
+$("wg").innerHTML=names.map(function(n){return '<label for="w'+n[0]+'">'+n[1]+'</label><input id="w'+n[0]+'" data-k="'+n[0]+'" type="number" inputmode="decimal" step="any" value="'+W[n[0]]+'">'}).join("");
+$("wg").oninput=function(e){var k=e.target.getAttribute("data-k"),v=parseFloat(e.target.value);if(k&&v>0){W[k]=v;try{localStorage.setItem("tcw",JSON.stringify(W))}catch(x){}calc()}};
+tabs();calc();
+if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
+</script>
+</body>
+</html>
