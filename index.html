@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0e2a22">
+<meta name="theme-color" content="#0b3d91">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Batch Calc">
@@ -77,6 +77,16 @@ input[type=number]{font-family:"Barlow Condensed","Arial Narrow",system-ui,sans-
 .tot .v small,.tot .w{color:#9fc4b6}
 .order{border-radius:0 12px 12px 0;font-size:16px;margin:16px 0 4px}
 .wg input{font-family:"Barlow",system-ui,sans-serif;font-size:18px;font-weight:600;padding:8px}
+/* white and blue theme */
+:root{--bg:#f3f7fc;--card:#fff;--ink:#0b1f3a;--mute:#566a84;--line:#d2deed;--acc:#1456c8;--accink:#fff;--hl:#e8f1fd;--head:#0b3d91;--amber:#a9d0ff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a1424;--card:#111f36;--ink:#e8f0fb;--mute:#9fb2cc;--line:#243652;--acc:#5aa2ff;--accink:#04152e;--hl:#162a4a;--head:#0a2a63;--amber:#a9d0ff}}
+:root[data-theme="dark"]{--bg:#0a1424;--card:#111f36;--ink:#e8f0fb;--mute:#9fb2cc;--line:#243652;--acc:#5aa2ff;--accink:#04152e;--hl:#162a4a;--head:#0a2a63;--amber:#a9d0ff}
+.stripe{height:6px;background:linear-gradient(90deg,#1456c8,#6fb1ff 60%,#d6e9ff)}
+.top p,.tot .v small,.tot .w{color:#bcd6f5}
+.order{border-left-color:var(--acc)}
+.row{box-shadow:0 1px 3px rgba(11,61,145,.08)}
+.tot{border-color:var(--head)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tot{border-color:var(--acc)}}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
 </head>
